@@ -7,7 +7,7 @@ from django.db import models
 # Create your models here.
 
 class TicketListTable(models.Model):
-    ticketListId = models.IntegerField()
+    ticketListId = models.AutoField(primary_key=True)
     ticketListName = models.CharField(max_length=50)
     ticketListCreated = models.DateTimeField()
     ticketListUpdates = models.DateTimeField()
@@ -21,7 +21,7 @@ class TicketListTable(models.Model):
 
 
 class TicketTable(models.Model):
-    ticketId = models.IntegerField()
+    ticketId = models.AutoField(primary_key=True)
     ticketNumber = models.CharField(max_length=50)
     ticketCustomerName = models.CharField(max_length=50)
     ticketInfo = models.CharField(max_length=100)
@@ -39,7 +39,7 @@ class TicketTable(models.Model):
 
 
 class CheckingTable(models.Model):
-    checkingId = models.IntegerField()
+    checkingId = models.AutoField(primary_key=True)
     checkingName = models.CharField(max_length=50)
     checkingTime = models.DateTimeField()
     checkingDate = models.DateField()
@@ -53,7 +53,7 @@ class CheckingTable(models.Model):
 
 
 class ScanningTable(models.Model):
-    scanningId = models.IntegerField()
+    scanningId = models.AutoField(primary_key=True)
     scanningStatus = models.CharField(max_length=50)
     scanningTime = models.DateTimeField()
     scanningCheckedMannualy = models.BooleanField()
@@ -72,7 +72,7 @@ class ScanningTable(models.Model):
 
 
 class CheckingTicketListRelationship(models.Model):
-    primary_id = models.IntegerField()
+    primary_id = models.AutoField(primary_key=True)
     checkingListEventId = models.ForeignKey(CheckingTable, on_delete=models.CASCADE, related_name="event_relation")
     checkingTicketListId = models.ForeignKey(TicketListTable, on_delete=models.CASCADE, related_name="list_relation")
 
