@@ -3,6 +3,7 @@ from .models import TicketListTable
 
 
 class TicketListSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
     class Meta:
         model = TicketListTable
-        fields = '__all__'
+        fields = ['id','ticketListName','ticketListCreated','ticketListUpdates']

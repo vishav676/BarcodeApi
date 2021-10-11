@@ -15,12 +15,6 @@ from backend.serializers import TicketListSerializer
 
 @api_view(['GET'])
 def ticketList(request):
-    data = request.data
-    auth_key = data['api']
-    tokens = Token.objects.get(key=auth_key)
-    user = tokens.user
-    if tokens is not None:
-        authenticate(request, user)
     ticketsList = TicketListTable.objects.all()
     serializer = TicketListSerializer(ticketsList, many=True)
     return Response(serializer.data)
