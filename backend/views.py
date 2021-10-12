@@ -9,8 +9,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from backend.models import TicketListTable
-from backend.serializers import TicketListSerializer
+from backend.models import TicketListTable, TicketTable
+from backend.serializers import TicketListSerializer, TicketSerializer
 
 
 @api_view(['GET'])
@@ -41,4 +41,19 @@ def updateTicketList(request, pk):
     serializer = TicketListSerializer(instance=ticketsList, data=request.data)
     if serializer.is_valid():
         serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def createTicket(request):
+    serializer = TicketSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getTickets(request):
+    allTickets = TicketTable.objects.all()
+    serializer = TicketSerializer(allTickets, many=True)
     return Response(serializer.data)

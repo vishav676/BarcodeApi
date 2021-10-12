@@ -2,9 +2,21 @@ from django.urls import path
 
 from django.contrib import admin
 from . import views
+
 urlpatterns = [
-    path('tickets-List', views.ticketList, name="tickets-list"),
-    path('ticket-List/<str:pk>', views.ticketOneList, name="ticket-list"),
-    path('ticketList-create', views.createTicketList, name="create-tickets-list"),
-    path('ticketList-updatation/<str:pk>', views.updateTicketList, name="update-tickets-list"),
+
+    # to get
+    path('get/allTicketsList', views.ticketList, name="getTicketsList"),
+    path('get/allTickets', views.getTickets, name="getTickets"),
+
+    # to create
+    path('create/ticketList', views.createTicketList, name="createTicketList"),
+    path('create/ticket', views.createTicket, name="createTicket"),
+
+    # to get one
+    path('get/ticketList/<str:pk>', views.ticketOneList, name="getOneTicketList"),
+
+    # to update
+    path('update/ticketList/<str:pk>', views.updateTicketList, name="updateTicketList"),
+
 ]
