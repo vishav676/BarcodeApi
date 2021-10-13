@@ -18,5 +18,6 @@ urlpatterns = [
 
     # to update
     path('update/ticketList/<str:pk>', views.updateTicketList, name="updateTicketList"),
+    path('update/ticket/<str:pk>', views.updateTicket, name="updateTicket"),
 
 ]

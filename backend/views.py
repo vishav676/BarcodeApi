@@ -57,3 +57,12 @@ def getTickets(request):
     allTickets = TicketTable.objects.all()
     serializer = TicketSerializer(allTickets, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def updateTicket(request, pk):
+    ticket = TicketTable.objects.get(id=pk)
+    serializer = TicketSerializer(instance=ticket, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
