@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TicketListTable, TicketTable
+from .models import TicketListTable, TicketTable, CheckingTable, ScanningTable, CheckingTicketListRelationship
 
 
 class TicketListSerializer(serializers.ModelSerializer):
@@ -18,3 +18,30 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = ['id', 'ticketNumber', 'ticketCustomerName', 'ticketInfo',
                   'ticketWarningNote', 'ticketUseable', 'ticketWarning',
                   'ticketListId']
+
+
+class CheckingSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+
+    class Meta:
+        model = CheckingTable
+        fields = ["id", "checkingName", "checkingTime", "checkingDate"]
+
+
+class ScanningTableSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+
+    class Meta:
+        model = ScanningTable
+        fields = ["id", "scanningTime", "scanningCheckedMannualy",
+                  "scanningIssue", "scanningNote",
+                  "scanningTimesUsed", "scanningTicketNumber",
+                  "scanningCheckingId"]
+
+
+class CheckingTicketListSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+
+    class Meta:
+        model = CheckingTicketListRelationship
+        fields = ["id", "checkingListEventId", "checkingTicketListId"]
