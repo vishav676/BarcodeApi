@@ -59,7 +59,7 @@ def getTickets(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['PUT'])
 def updateTicket(request, pk):
     ticket = TicketTable.objects.get(id=pk)
     serializer = TicketSerializer(instance=ticket, data=request.data)
