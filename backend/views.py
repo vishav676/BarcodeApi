@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.decorators import api_view
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from backend.models import TicketListTable, TicketTable, CheckingTable, ScanningTable, CheckingTicketListRelationship
@@ -9,111 +9,119 @@ from backend.serializers import TicketListSerializer, TicketSerializer, Checking
     CheckingTicketListSerializer
 
 
-@api_view(['GET'])
-def ticketList(request):
-    ticketsList = TicketListTable.objects.all()
-    serializer = TicketListSerializer(ticketsList, many=True)
-    return Response(serializer.data)
+class TicketList(GenericAPIView):
+    serializer_class = TicketListSerializer
+
+    def get(self, request):
+        ticketsList = TicketListTable.objects.all()
+        serializer = TicketListSerializer(ticketsList, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TicketListSerializer(data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(['GET'])
-def ticketOneList(request, pk):
-    ticketsList = TicketListTable.objects.get(id=pk)
-    serializer = TicketListSerializer(ticketsList, many=False)
-    return Response(serializer.data)
+class TicketListDetail(GenericAPIView):
+    serializer_class = TicketListSerializer
+    queryset = TicketListTable.objects
+
+    def put(self, request, pk):
+        ticketsList = TicketListTable.objects.get(id=pk)
+        serializer = TicketListSerializer(instance=ticketsList, data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(['POST'])
-def createTicketList(request):
-    serializer = TicketListSerializer(data=request.data)
-    return saveToDb(serializer)
+class Ticket(GenericAPIView):
+    serializer_class = TicketSerializer
+
+    def get(self, request):
+        allTickets = TicketTable.objects.all()
+        serializer = TicketSerializer(allTickets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TicketSerializer(data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(['POST'])
-def updateTicketList(request, pk):
-    ticketsList = TicketListTable.objects.get(id=pk)
-    serializer = TicketListSerializer(instance=ticketsList, data=request.data)
-    return saveToDb(serializer)
+class TicketDetail(GenericAPIView):
+    serializer_class = TicketSerializer
+    queryset = TicketTable.objects
+
+    def put(self, request, pk):
+        ticket = TicketTable.objects.get(id=pk)
+        serializer = TicketSerializer(instance=ticket, data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(['POST'])
-def createTicket(request):
-    serializer = TicketSerializer(data=request.data)
-    return saveToDb(serializer)
+class Scanning(GenericAPIView):
+    serializer_class = ScanningTableSerializer
+
+    def get(self, request):
+        allScannings = ScanningTable.objects.all()
+        serializer = ScanningTableSerializer(allScannings, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ScanningTableSerializer(data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(['GET'])
-def getTickets(request):
-    allTickets = TicketTable.objects.all()
-    serializer = TicketSerializer(allTickets, many=True)
-    return Response(serializer.data)
+class ScanningDetail(GenericAPIView):
+    serializer_class = ScanningTableSerializer
+    queryset = ScanningTable.objects
+
+    def put(self, request, pk):
+        scanning = ScanningTable.objects.get(id=pk)
+        serializer = ScanningTableSerializer(instance=scanning, data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(['PUT'])
-def updateTicket(request, pk):
-    ticket = TicketTable.objects.get(id=pk)
-    serializer = TicketSerializer(instance=ticket, data=request.data)
-    return saveToDb(serializer)
+class Checking(GenericAPIView):
+    serializer_class = CheckingSerializer
+
+    def get(self, request):
+        allCheckings = CheckingTable.objects.all()
+        serializer = CheckingSerializer(allCheckings, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CheckingSerializer(data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(["GET"])
-def getCheckings(request):
-    allCheckings = CheckingTable.objects.all()
-    serializer = CheckingSerializer(allCheckings, many=True)
-    return Response(serializer.data)
+class CheckingDetail(GenericAPIView):
+    serializer_class = CheckingSerializer
+    queryset = CheckingTable.objects
+
+    def put(self, request, pk):
+        checking = CheckingTable.objects.get(pk)
+        serializer = CheckingSerializer(instance=checking, data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(["POST"])
-def createChecking(request):
-    serializer = CheckingSerializer(data=request.data)
-    return saveToDb(serializer)
+class CheckingTicketRelation(GenericAPIView):
+    serializer_class = CheckingTicketListSerializer
+
+    def get(self, request):
+        allRelation = CheckingTicketListRelationship.objects.all()
+        serializer = CheckingTicketListSerializer(allRelation, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CheckingTicketListSerializer(data=request.data)
+        return saveToDb(serializer)
 
 
-@api_view(["PUT"])
-def updateChecking(request, pk):
-    checking = CheckingTable.objects.get(id=pk)
-    serializer = CheckingSerializer(instance=checking, data=request.data)
-    return saveToDb(serializer)
+class CheckingTableRelationDetail(GenericAPIView):
+    serializer_class = CheckingTicketListSerializer
+    queryset = CheckingTicketListRelationship.objects
 
-
-@api_view(["GET"])
-def getScannings(request):
-    allScannings = ScanningTable.objects.all()
-    serializer = ScanningTableSerializer(allScannings, many=True)
-    return Response(serializer.data)
-
-
-@api_view(["POST"])
-def createScanning(request):
-    serializer = ScanningTableSerializer(data=request.data)
-    return saveToDb(serializer)
-
-
-@api_view(["PUT"])
-def updateScanning(request, pk):
-    scanning = ScanningTable.objects.get(id=pk)
-    serializer = ScanningTableSerializer(instance=scanning, data=request.data)
-    return saveToDb(serializer)
-
-
-@api_view(["GET"])
-def getCheckingTicketList(request):
-    allRelation = CheckingTicketListRelationship.objects.all()
-    serializer = CheckingTicketListSerializer(allRelation, many=True)
-    return Response(serializer.data)
-
-
-@api_view(["POST"])
-def createCheckingTicketList(request):
-    serializer = CheckingTicketListSerializer(data=request.data)
-    return saveToDb(serializer)
-
-
-@api_view(["PUT"])
-def updateScanning(request, pk):
-    relation = CheckingTicketListRelationship.objects.get(id=pk)
-    serializer = CheckingTicketListSerializer(instance=relation, data=request.data)
-    return saveToDb(serializer)
+    def put(self, request, pk):
+        relation = CheckingTicketListRelationship.objects.get(id=pk)
+        serializer = CheckingTicketListSerializer(instance=relation, data=request.data)
+        return saveToDb(serializer)
 
 
 def saveToDb(serialized):

@@ -1,34 +1,39 @@
 from django.urls import path
+from backend import views
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
-from django.contrib import admin
-from . import views
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
 
-    # to get
-    path('get/ticketLists', views.ticketList, name="getTicketsList"),
-    path('get/tickets', views.getTickets, name="getTickets"),
-    path('get/checkings', views.getCheckings, name="getCheckings"),
-    path('get/histories', views.getScannings, name="getScannings"),
-    path('get/checkingTicketRelations', views.getCheckingTicketList, name="ticketCheckingRelation"),
+    path('ticketLists/', views.TicketList.as_view()),
+    path('ticketLists/<str:pk>', views.TicketListDetail.as_view()),
 
+    path('ticket/', views.Ticket.as_view()),
+    path('ticket/<str:pk>', views.TicketDetail.as_view()),
 
-    # to create
-    path('create/ticketList', views.createTicketList, name="createTicketList"),
-    path('create/ticket', views.createTicket, name="createTicket"),
-    path('create/history', views.createScanning, name="createScanning"),
-    path('create/checking', views.createChecking, name="createChecking"),
-    path('create/checkingTicketRelation', views.createCheckingTicketList, name="createCheckingTicket"),
+    path('scanning/', views.Scanning.as_view()),
+    path('scanning/<str:pk>', views.ScanningDetail.as_view()),
 
+    path('checking/', views.Checking.as_view()),
+    path('checking/<str:pk>', views.CheckingDetail.as_view()),
 
-    # to get one
-    path('get/ticketList/<str:pk>', views.ticketOneList, name="getOneTicketList"),
+    path('checkingTicket/', views.CheckingTicketRelation.as_view()),
+    path('checkingTicket/<str:pk>', views.CheckingTableRelationDetail.as_view()),
 
-    # to update
-    path('update/ticketList/<str:pk>', views.updateTicketList, name="updateTicketList"),
-    path('update/ticket/<str:pk>', views.updateTicket, name="updateTicket"),
-    path('update/history/<str:pk>', views.updateTicket, name="updateTicket"),
-    path('update/checking/<str:pk>', views.updateTicket, name="updateTicket"),
-    path('update/checkingTicketRealtion/<str:pk>', views.updateTicket, name="updateTicket"),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
 ]
