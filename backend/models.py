@@ -71,7 +71,6 @@ class CheckingTicketListRelationship(models.Model):
     checkingListEventId = models.ForeignKey(CheckingTable, on_delete=models.CASCADE, related_name="event_relation")
     checkingTicketListId = models.ForeignKey(TicketListTable, on_delete=models.CASCADE, related_name="list_relation")
 
-
     class Meta:
         app_label = "backend"
         db_table = "CheckingTicketListRelationship"
