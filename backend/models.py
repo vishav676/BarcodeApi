@@ -22,10 +22,10 @@ class TicketListTable(models.Model):
 class TicketTable(models.Model):
     ticketNumber = models.CharField(max_length=50)
     ticketCustomerName = models.CharField(max_length=50)
-    ticketInfo = models.CharField(max_length=100)
-    ticketWarningNote = models.CharField(max_length=100)
+    ticketInfo = models.CharField(max_length=100, blank=True)
+    ticketWarningNote = models.CharField(max_length=100, blank=True)
     ticketUseable = models.IntegerField()
-    ticketWarning = models.CharField(max_length=50)
+    ticketWarning = models.CharField(max_length=50, blank=True)
     ticketListId = models.ForeignKey(TicketListTable, on_delete=models.CASCADE, related_name="listTable_tickets")
 
     def __str__(self):
@@ -53,8 +53,8 @@ class ScanningTable(models.Model):
     scanningStatus = models.CharField(max_length=50)
     scanningTime = models.DateTimeField()
     scanningCheckedMannualy = models.BooleanField()
-    scanningIssue = models.CharField(max_length=100)
-    scanningNote = models.CharField(max_length=100)
+    scanningIssue = models.CharField(max_length=100, blank=True)
+    scanningNote = models.CharField(max_length=100, blank=True)
     scanningTimesUsed = models.IntegerField()
     scanningTicketNumber = models.CharField(max_length=50)
     scanningCheckingId = models.ForeignKey(CheckingTable, on_delete=models.CASCADE, related_name="event_history")
