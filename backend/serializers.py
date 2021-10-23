@@ -34,7 +34,7 @@ class ScanningTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScanningTable
         fields = ["id", "scanningTime", "scanningCheckedMannualy",
-                  "scanningIssue", "scanningNote",
+                  "scanningIssue", "scanningNote", "scanningStatus"
                   "scanningTimesUsed", "scanningTicketNumber",
                   "scanningCheckingId"]
 
