@@ -5,11 +5,12 @@ from django.db import models
 
 
 # Create your models here.
+# Database model file.
 
-class TicketListTable(models.Model):
-    ticketListName = models.CharField(max_length=50)
-    ticketListCreated = models.DateTimeField()
-    ticketListUpdates = models.DateTimeField()
+class TicketListTable(models.Model):  # Create the table with name TicketListTable
+    ticketListName = models.CharField(max_length=50)  # table column to save the strings.
+    ticketListCreated = models.DateTimeField()  # table column to save when item was inserted in the database.
+    ticketListUpdates = models.DateTimeField() # table column to save when the table was recently updated.
 
     def __str__(self):
         return self.ticketListName

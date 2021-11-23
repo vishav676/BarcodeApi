@@ -8,6 +8,7 @@ from backend.serializers import TicketListSerializer, TicketSerializer, Checking
     CheckingTicketListSerializer
 
 
+# TicketList class to return data from database or to save data.
 class TicketList(GenericAPIView):
     serializer_class = TicketListSerializer
 
@@ -21,6 +22,7 @@ class TicketList(GenericAPIView):
         return saveToDb(serializer)
 
 
+# TicketList class to update data to database
 class TicketListDetail(GenericAPIView):
     serializer_class = TicketListSerializer
     queryset = TicketListTable.objects
@@ -31,6 +33,7 @@ class TicketListDetail(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Ticket class to return data from database or to save data.
 class Ticket(GenericAPIView):
     serializer_class = TicketSerializer
 
@@ -44,6 +47,7 @@ class Ticket(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Ticket class to update data to database
 class TicketDetail(GenericAPIView):
     serializer_class = TicketSerializer
     queryset = TicketTable.objects
@@ -54,6 +58,7 @@ class TicketDetail(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Scanning class to return data from database or to save data.
 class Scanning(GenericAPIView):
     serializer_class = ScanningTableSerializer
 
@@ -67,6 +72,7 @@ class Scanning(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Scanning class to update data to database
 class ScanningDetail(GenericAPIView):
     serializer_class = ScanningTableSerializer
     queryset = ScanningTable.objects
@@ -77,6 +83,7 @@ class ScanningDetail(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Checking class to return data from database or to save data.
 class Checking(GenericAPIView):
     serializer_class = CheckingSerializer
 
@@ -90,6 +97,7 @@ class Checking(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Checking class to update data to database
 class CheckingDetail(GenericAPIView):
     serializer_class = CheckingSerializer
     queryset = CheckingTable.objects
@@ -100,6 +108,7 @@ class CheckingDetail(GenericAPIView):
         return saveToDb(serializer)
 
 
+# CheckingTicketRelation class to return data from database or to save data.
 class CheckingTicketRelation(GenericAPIView):
     serializer_class = CheckingTicketListSerializer
 
@@ -113,6 +122,7 @@ class CheckingTicketRelation(GenericAPIView):
         return saveToDb(serializer)
 
 
+# CheckingTableRelationDetail class to update data to database
 class CheckingTableRelationDetail(GenericAPIView):
     serializer_class = CheckingTicketListSerializer
     queryset = CheckingTicketListRelationship.objects
@@ -123,6 +133,7 @@ class CheckingTableRelationDetail(GenericAPIView):
         return saveToDb(serializer)
 
 
+# Save the data to db.
 def saveToDb(serialized):
     if serialized.is_valid():
         serialized.save()

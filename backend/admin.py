@@ -5,6 +5,7 @@ from backend.models import TicketListTable, CheckingTable, ScanningTable, Ticket
 from django.contrib import admin
 
 # Register your models here.
+# We have to register each model so when we migrate table can be created.
 admin.site.register(TicketListTable)
 admin.site.register(CheckingTable)
 admin.site.register(ScanningTable)

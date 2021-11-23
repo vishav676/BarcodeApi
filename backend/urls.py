@@ -1,6 +1,7 @@
 from django.urls import path
 from backend import views
 
+# URL patterns to access the specific endpoint when deployed.
 urlpatterns = [
 
     path('ticketLists/', views.TicketList.as_view()),
